@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { 
   Search, 
@@ -19,6 +19,18 @@ import {
   ShieldAlert
 } from 'lucide-react';
 
+// Custom hook to detect mobile view
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+  return isMobile;
+}
+
 export default function FeatureSection() {
   // Features data structure
   const features = [
@@ -31,19 +43,16 @@ export default function FeatureSection() {
       ],
       icon: Search,
       illustrationSide: 'right',
-      color: 'from-blue-500 to-indigo-600',      illustration: (
-        <div className="relative w-full h-full min-h-[300px]">
+      color: 'from-blue-500 to-indigo-600',      illustration: (        <div className="relative w-full h-full min-h-[400px]">
           {/* Market Analysis Illustration */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="relative w-full max-w-2xl h-auto flex items-center justify-center">
+            <div className="relative w-full max-w-xl h-auto flex items-center justify-center">
               {/* Main background glow effect */}
               <div className="absolute inset-0 rounded-full bg-pink-500/20 blur-3xl opacity-40"></div>
               
-              {/* The Market Analysis Dashboard with glassmorphic effect */}
-              <div className="relative z-10 w-full h-full">
-                <div className="relative w-[320px] h-[320px] md:w-[420px] md:h-[420px] xl:w-[480px] xl:h-[480px] animate-float">
+              {/* The Market Analysis Dashboard with glassmorphic effect */}              <div className="relative z-10 w-full h-full">                <div className="relative w-[300px] h-[360px] md:w-[380px] md:h-[440px] xl:w-[420px] xl:h-[480px] animate-float">
                   {/* Main glassmorphic container for analytics dashboard */}
-                  <div className="relative w-full h-full backdrop-blur-xl bg-gradient-to-br from-black/40 to-pink-950/20 rounded-2xl border border-pink-500/30 p-4 md:p-5 shadow-2xl shadow-pink-500/20 overflow-hidden">
+                  <div className="relative w-full h-full backdrop-blur-xl bg-gradient-to-br from-black/40 to-pink-950/20 rounded-2xl border border-pink-500/30 p-3.5 md:p-4 shadow-2xl shadow-pink-500/20 overflow-hidden">
                     {/* Background glow effects */}
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-pink-500/10 rounded-full blur-[80px]"></div>
                     <div className="absolute bottom-0 right-0 w-[50%] h-[50%] bg-red-500/10 rounded-full blur-[60px]"></div>
@@ -56,16 +65,11 @@ export default function FeatureSection() {
                         </svg>
                         <div className="text-gray-400 text-xs">Search: healthy food delivery market 2024</div>
                       </div>
-                      <div className="absolute inset-0 bg-gradient-to-r from-pink-500/5 to-transparent rounded-lg blur-sm"></div>
-                    </div>
-                    
-                    {/* Dashboard panels container */}                    <div className="flex flex-col md:flex-row gap-3">
+                      <div className="absolute inset-0 bg-gradient-to-r from-pink-500/5 to-transparent rounded-lg blur-sm"></div>                    </div>                    {/* Dashboard panels container */}                    <div className="flex flex-col md:flex-row gap-2.5 mt-0.5">
                       {/* Left column with line and pie charts */}
-                      <div className="flex-1">
-                        {/* Line chart - Market Growth */}
-                        <div className="bg-black/30 backdrop-blur-md rounded-lg border border-pink-500/20 p-2 md:p-3 mb-3">
-                          <div className="text-xs font-medium text-gray-200 mb-2">Market Growth (2020–2024)</div>
-                          <div className="relative h-24">
+                      <div className="flex-1 flex flex-col">{/* Line chart - Market Growth */}
+                        <div className="bg-black/30 backdrop-blur-md rounded-lg border border-pink-500/20 p-1.5 md:p-2.5 mb-2.5"><div className="text-xs font-medium text-gray-200 mb-1">Market Growth (2020–2024)</div>
+                          <div className="relative h-[5rem]">
                             {/* Chart background grid */}
                             <div className="absolute inset-0 flex flex-col justify-between">
                               {[...Array(4)].map((_, i) => (
@@ -118,51 +122,61 @@ export default function FeatureSection() {
                               <div className="text-[10px] text-gray-500">2022</div>
                               <div className="text-[10px] text-gray-500">2024</div>
                             </div>
-                          </div>
-                        </div>
-                          {/* Pie chart - User Demographics */}
-                        <div className="bg-black/30 backdrop-blur-md rounded-lg border border-pink-500/20 p-2 md:p-3">
-                          <div className="text-xs font-medium text-gray-200 mb-2">User Demographics</div>
-                          <div className="flex">
-                            {/* Pie chart SVG */}
-                            <div className="w-16 h-16 md:w-20 md:h-20 relative">
-                              <svg viewBox="0 0 36 36" className="w-full h-full">
-                                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#444" strokeWidth="1" />
-                                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#ec4899" strokeWidth="3" strokeDasharray="35, 100" />
-                                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#1a7fd1" strokeWidth="3" strokeDasharray="25, 100" strokeDashoffset="-35" />
-                                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#8b5cf6" strokeWidth="3" strokeDasharray="20, 100" strokeDashoffset="-60" />
-                                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#10b981" strokeWidth="3" strokeDasharray="20, 100" strokeDashoffset="-80" />
-                              </svg>
+                          </div>                        </div>                          {/* Pie chart - User Demographics */}                        <div className="bg-black/30 backdrop-blur-md rounded-lg border border-pink-500/20 p-1.5 md:p-2.5 flex-1 flex flex-col">
+                          <div className="text-xs font-medium text-gray-200 mb-4">User Demographics</div>
+                          <div className="flex flex-col items-center space-y-1.5">
+                            {/* Pie chart section - moved out of flex justify-center */}
+                            <div className="flex">
+                              <div className="w-14 h-14 md:w-16 md:h-16 relative">
+                                <svg viewBox="0 0 36 36" className="w-full h-full">
+                                  <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#444" strokeWidth="1" />
+                                  <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#ec4899" strokeWidth="3" strokeDasharray="35, 100" />
+                                  <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#1a7fd1" strokeWidth="3" strokeDasharray="25, 100" strokeDashoffset="-35" />
+                                  <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#8b5cf6" strokeWidth="3" strokeDasharray="20, 100" strokeDashoffset="-60" />
+                                  <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#10b981" strokeWidth="3" strokeDasharray="20, 100" strokeDashoffset="-80" />
+                                </svg>
+                              </div>
+
+                              {/* Legend moved for better layout */}
+                              <div className="ml-1.5 md:ml-2 flex flex-col justify-center text-[9px] space-y-0.5">
+                                <div className="flex items-center">
+                                  <div className="w-2 h-2 bg-pink-500 rounded-sm mr-1"></div>
+                                  <div className="text-gray-300">Millennials (35%)</div>
+                                </div>
+                                <div className="flex items-center">
+                                  <div className="w-2 h-2 bg-blue-500 rounded-sm mr-1"></div>
+                                  <div className="text-gray-300">Gen Z (25%)</div>
+                                </div>
+                                <div className="flex items-center">
+                                  <div className="w-2 h-2 bg-purple-500 rounded-sm mr-1"></div>
+                                  <div className="text-gray-300">Gen X (20%)</div>
+                                </div>
+                                <div className="flex items-center">
+                                  <div className="w-2 h-2 bg-emerald-500 rounded-sm mr-1"></div>
+                                  <div className="text-gray-300">Others (20%)</div>
+                                </div>
+                              </div>
                             </div>
                             
-                            {/* Legend */}
-                            <div className="ml-2 md:ml-3 flex flex-col justify-center text-[10px] space-y-1">
-                              <div className="flex items-center">
-                                <div className="w-2 h-2 bg-pink-500 rounded-sm mr-1"></div>
-                                <div className="text-gray-300">Millennials (35%)</div>
-                              </div>
-                              <div className="flex items-center">
-                                <div className="w-2 h-2 bg-blue-500 rounded-sm mr-1"></div>
-                                <div className="text-gray-300">Gen Z (25%)</div>
-                              </div>
-                              <div className="flex items-center">
-                                <div className="w-2 h-2 bg-purple-500 rounded-sm mr-1"></div>
-                                <div className="text-gray-300">Gen X (20%)</div>
-                              </div>
-                              <div className="flex items-center">
-                                <div className="w-2 h-2 bg-emerald-500 rounded-sm mr-1"></div>
-                                <div className="text-gray-300">Others (20%)</div>
+                            {/* Added insight text to fill empty space */}
+                            <div className="w-full px-1.5 pt-1.5 pb-1 mt-1">
+                              <div className="text-[10px] text-center text-gray-200/90">
+                                Millennials and Gen Z account for 60% of the target market
                               </div>
                             </div>
+                          </div>
+                          
+                          {/* Decorative elements to match Market Insight */}
+                          <div className="relative w-full h-full">
+                            <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-blue-500/20 animate-ping opacity-70" style={{ animationDuration: '3.5s' }}></div>
+                            <div className="absolute -bottom-1 -left-1 w-4 h-4 rounded-full bg-purple-500/20 animate-ping opacity-70" style={{ animationDuration: '4.2s' }}></div>
                           </div>
                         </div>
                       </div>
                         {/* Right column with bar chart and insight card */}
-                      <div className="flex-1 flex flex-col">
-                        {/* Bar chart - Competitor Comparison */}
-                        <div className="bg-black/30 backdrop-blur-md rounded-lg border border-pink-500/20 p-2 md:p-3 mb-3">
-                          <div className="text-xs font-medium text-gray-200 mb-2">Competitor Comparison</div>
-                          <div className="space-y-2">
+                      <div className="flex-1 flex flex-col">                        {/* Bar chart - Competitor Comparison */}
+                        <div className="bg-black/30 backdrop-blur-md rounded-lg border border-pink-500/20 p-1.5 md:p-2.5 mb-2.5">
+                          <div className="text-xs font-medium text-gray-200 mb-1">Competitor Comparison</div>                          <div className="space-y-1.5">
                             {[
                               { name: 'Company A', value: 84 },
                               { name: 'Company B', value: 62 },
@@ -182,11 +196,10 @@ export default function FeatureSection() {
                               </div>
                             ))}
                           </div>
-                        </div>
-                          {/* Insight card */}
-                        <div className="bg-black/30 backdrop-blur-md rounded-lg border border-pink-500/20 p-2 md:p-3 flex-1 flex items-center">
+                        </div>                          {/* Insight card */}
+                        <div className="bg-black/30 backdrop-blur-md rounded-lg border border-pink-500/20 p-1.5 md:p-2.5 flex-1 flex items-center">
                           <div className="relative w-full">
-                            <div className="text-xs font-medium text-gray-200 mb-2">Market Insight</div>
+                            <div className="text-xs font-medium text-gray-200 mb-1">Market Insight</div>
                             <div className="p-2 bg-gradient-to-br from-pink-900/30 to-pink-800/10 rounded-lg border border-pink-500/20">
                               <div className="text-xs md:text-sm text-white font-medium flex items-center">
                                 <span className="text-sm mr-1">📈</span>
@@ -201,15 +214,12 @@ export default function FeatureSection() {
                             <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-pink-500/20 animate-ping opacity-70" style={{ animationDuration: '3s' }}></div>
                             <div className="absolute -bottom-1 -left-1 w-4 h-4 rounded-full bg-red-500/20 animate-ping opacity-70" style={{ animationDuration: '4s' }}></div>
                           </div>
-                        </div>
-                      </div>
+                        </div>                      </div>
                     </div>
-                    
-                    {/* Added Market Size and Target Audience cards row */}
-                    <div className="flex justify-between gap-4 mt-3">
-                      {/* Market Size Card */}
-                      <div className="bg-black/40 backdrop-blur-md rounded-lg border border-pink-500/30 p-2 w-[48%] shadow-lg shadow-pink-500/10 z-10">
-                        <div className="text-xs font-medium text-gray-200 mb-1.5">Market Size</div>
+                      {/* Added Market Size and Target Audience cards row */}
+                    <div className="flex justify-between gap-4 mt-1.5">                      {/* Market Size Card */}
+                      <div className="bg-black/40 backdrop-blur-md rounded-lg border border-pink-500/30 p-1.5 w-[48%] shadow-lg shadow-pink-500/10 z-10">
+                        <div className="text-xs font-medium text-gray-200 mb-1">Market Size</div>
                         <div className="flex items-center">
                           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-pink-500/20 to-pink-800/20 flex items-center justify-center mr-2">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-pink-400">
@@ -230,10 +240,9 @@ export default function FeatureSection() {
                           </div>
                         </div>
                       </div>
-                      
-                      {/* Target Audience Card */}
-                      <div className="bg-black/40 backdrop-blur-md rounded-lg border border-pink-500/30 p-2 w-[48%] shadow-lg shadow-pink-500/10 z-10">
-                        <div className="text-xs font-medium text-gray-200 mb-1.5">Target Audience</div>
+                        {/* Target Audience Card */}
+                      <div className="bg-black/40 backdrop-blur-md rounded-lg border border-pink-500/30 p-1.5 w-[48%] shadow-lg shadow-pink-500/10 z-10">
+                        <div className="text-xs font-medium text-gray-200 mb-1">Target Audience</div>
                         <div className="flex items-center">
                           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500/20 to-blue-800/20 flex items-center justify-center mr-2">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-blue-400">
@@ -248,10 +257,8 @@ export default function FeatureSection() {
                             <div className="text-[10px] text-gray-400">Health-conscious urban</div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                      {/* Hovering magnifying glass */}
-                    <div className="absolute bottom-3 right-4 animate-float" style={{ animationDelay: '1.5s' }}>
+                      </div>                    </div>                      {/* Hovering magnifying glass */}
+                    <div className="absolute bottom-2 right-4 animate-float" style={{ animationDelay: '1.5s' }}>
                       <div className="w-6 h-6 md:w-8 md:h-8 bg-gradient-to-br from-pink-500/20 to-pink-900/20 rounded-full border border-pink-500/30 flex items-center justify-center shadow-lg shadow-pink-500/20">
                         <svg width="12" height="12" fill="none" className="text-pink-500 md:w-4 md:h-4">
                           <path d="M19 19l-4.35-4.35M17 9A8 8 0 1 1 1 9a8 8 0 0 1 16 0z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -278,12 +285,11 @@ export default function FeatureSection() {
       ],
       icon: Puzzle,
       illustrationSide: 'left',
-      color: 'from-emerald-500 to-teal-600',      
-      illustration: (
-        <div className="relative w-full h-full min-h-[400px]">
+      color: 'from-emerald-500 to-teal-600',        illustration: (
+        <div className="relative w-full h-full min-h-[340px]">
           <div className="absolute inset-0 flex items-center justify-center">
             {/* Main container with glassmorphic effect */}
-            <div className="relative w-full max-w-3xl h-[380px] backdrop-blur-xl bg-gradient-to-br from-black/40 to-pink-950/20 rounded-2xl border border-pink-500/30 p-6 shadow-2xl shadow-pink-500/20 overflow-hidden">
+            <div className="relative w-full max-w-2xl h-[320px] backdrop-blur-xl bg-gradient-to-br from-black/40 to-pink-950/20 rounded-2xl border border-pink-500/30 p-5 shadow-2xl shadow-pink-500/20 overflow-hidden">
               
               {/* Background glow effects */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-pink-500/10 rounded-full blur-[80px]"></div>
@@ -468,7 +474,7 @@ export default function FeatureSection() {
                           <div className="w-5 h-5 text-white animate-pulse">
                             <svg viewBox="0 0 24 24" fill="none">
                               <path d="M12 21.985c-.275 0-.532-.074-.772-.202l-2.439-1.448c-.365-.204-.182-.277-.072-.314.496-.165.588-.198 1.101-.493.056-.029.129-.018.185.018l1.87 1.12c.074.036.166.036.22 0l7.319-4.237c.073-.036.11-.11.11-.202V7.768c0-.091-.037-.165-.11-.202l-7.319-4.219c-.073-.037-.165-.037-.22 0L4.552 7.566c-.073.036-.11.129-.11.201v8.457c0 .073.037.165.11.201l2 1.157c1.082.543 1.762-.095 1.762-.735V8.502c0-.11.091-.22.22-.22h.926c.11 0 .22.092.22.22v8.345c0 1.448-.788 2.294-2.164 2.294-.422 0-.752 0-1.688-.46l-1.908-1.103c-.477-.275-.771-.788-.771-1.337v-8.46c0-.55.294-1.062.771-1.336l7.336-4.237a1.65 1.65 0 011.54 0l7.337 4.237c.477.275.771.787.771 1.336v8.458c0 .55-.295 1.062-.771 1.337l-7.337 4.237a1.74 1.74 0 01-.77.202z" fill="currentColor"/>
-                            </svg>
+                        </svg>
                           </div>
                           {/* Glowing effect */}
                           <div className="absolute inset-0 bg-green-500/40 rounded-full blur-md"></div>
@@ -815,145 +821,137 @@ export default function FeatureSection() {
         'Risk and mitigation map'
       ],
       icon: BarChart,
-      illustrationSide: 'right',
-      color: 'from-amber-500 to-yellow-600',      illustration: (
-        <div className="relative w-full h-full min-h-[300px]">
+      illustrationSide: 'right',      color: 'from-amber-500 to-yellow-600',      illustration: (
+        <div className="relative w-full h-full min-h-[260px]">
           {/* Premium Pricing Strategy Cards Illustration */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="relative w-full max-w-4xl mx-auto">
+            <div className="relative w-full max-w-3xl mx-auto">
               {/* Main background glow effect */}
-              <div className="absolute inset-0 rounded-full bg-pink-500/20 blur-3xl opacity-30"></div>
-              
-              {/* Container for the pricing cards */}
+              <div className="absolute inset-0 rounded-full bg-pink-500/20 blur-3xl opacity-30"></div>                {/* Container for the pricing cards */}
               <div className="relative flex items-center justify-center">
                 {/* Pricing cards container */}
-                <div className="flex items-center justify-center space-x-4 md:space-x-6">
-                  
-                  {/* Free Plan Card */}
-                  <div className="relative group">
-                    <div className="absolute inset-0 bg-gradient-to-r from-pink-500/30 to-purple-500/30 rounded-2xl blur-md opacity-50 group-hover:opacity-70 transition-opacity duration-300"></div>
-                    <div className="relative w-[200px] h-[320px] backdrop-blur-xl bg-black/60 hover:bg-black/70 rounded-2xl border border-pink-500/20 overflow-hidden shadow-lg shadow-pink-500/20 transition-all duration-300">
+                <div className="flex items-center justify-center space-x-2 md:space-x-4">
+                    {/* Free Plan Card */}
+                  <div className="relative group">                    <div className="absolute inset-0 bg-gradient-to-r from-pink-500/30 to-purple-500/30 rounded-2xl blur-md opacity-50 group-hover:opacity-70 transition-opacity duration-300"></div>
+                    <div className="relative w-[160px] h-[260px] backdrop-blur-xl bg-black/60 hover:bg-black/70 rounded-2xl border border-pink-500/20 overflow-hidden shadow-lg shadow-pink-500/20 transition-all duration-300">
                       {/* Card header */}
-                      <div className="bg-gradient-to-r from-pink-900/30 to-black/30 p-4 border-b border-pink-500/10">
-                        <div className="text-gray-400 text-xs font-medium mb-1">FREE</div>
+                      <div className="bg-gradient-to-r from-pink-900/30 to-black/30 p-3 border-b border-pink-500/10">
+                        <div className="text-gray-400 text-[10px] font-medium mb-0.5">FREE</div>
                         <div className="flex items-baseline">
-                          <span className="text-2xl font-bold text-white">$0</span>
-                          <span className="text-gray-400 text-xs ml-1">/month</span>
+                          <span className="text-xl font-bold text-white">$0</span>
+                          <span className="text-gray-400 text-[10px] ml-1">/month</span>
                         </div>
-                        <div className="text-gray-400 text-xs">For individuals just starting out</div>
+                        <div className="text-gray-400 text-[9px]">For individuals just starting out</div>
                       </div>
                       
                       {/* Card features */}
-                      <div className="p-4">
-                        <ul className="space-y-3">
+                      <div className="p-3">
+                        <ul className="space-y-2">
                           {[
-                            'Basic market analysis',
+                            'Cross-platform sync',
                             'Single user collaboration',
-                            'Core feature access'
+                            'Core feature access',
+                            '1 personal workspace'
                             
                           ].map((feature, i) => (
                             <li key={i} className="flex items-start">
-                              <svg className="w-4 h-4 text-pink-400 mt-0.5 mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <svg className="w-3 h-3 text-pink-400 mt-0.5 mr-1.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                               </svg>
-                              <span className="text-gray-300 text-xs">{feature}</span>
+                              <span className="text-gray-300 text-[9px]">{feature}</span>
                             </li>
                           ))}
                         </ul>
                         
                         {/* CTA Button */}
-                        <div className="mt-5">
-                          <div className="w-full rounded-md py-2 border border-pink-500/30 text-pink-400 text-sm font-medium text-center hover:bg-pink-500/10 transition-colors duration-300 cursor-pointer">
+                        <div className="mt-4">
+                          <div className="w-full rounded-md py-1.5 border border-pink-500/30 text-pink-400 text-[10px] font-medium text-center hover:bg-pink-500/10 transition-colors duration-300 cursor-pointer">
                             Start for Free
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  
-                  {/* Pro Plan Card - Larger and more prominent */}
-                  <div className="relative group z-10 transform scale-110">
-                    <div className="absolute inset-0 bg-gradient-to-r from-pink-500/40 to-red-400/40 rounded-2xl blur-md opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
-                    <div className="relative w-[220px] h-[350px] backdrop-blur-xl bg-black/60 hover:bg-black/70 rounded-2xl border border-pink-500/30 overflow-hidden shadow-xl shadow-pink-500/30 transition-all duration-300">
+                    {/* Pro Plan Card - Larger and more prominent */}
+                  <div className="relative group z-10 transform scale-110">                    <div className="absolute inset-0 bg-gradient-to-r from-pink-500/40 to-red-400/40 rounded-2xl blur-md opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
+                    <div className="relative w-[175px] h-[290px] backdrop-blur-xl bg-black/60 hover:bg-black/70 rounded-2xl border border-pink-500/30 overflow-hidden shadow-xl shadow-pink-500/30 transition-all duration-300">
                       {/* Tag */}
-                      <div className="absolute top-4 right-4">
-                        <div className="bg-gradient-to-r from-pink-500 to-red-500 text-white text-xs px-2 py-1 rounded-full">
+                      <div className="absolute top-3 right-3">
+                        <div className="bg-gradient-to-r from-pink-500 to-red-500 text-white text-[9px] px-2 py-0.5 rounded-full">
                           Popular
                         </div>
                       </div>
                       
                       {/* Card header */}
-                      <div className="bg-gradient-to-r from-pink-800/30 to-pink-900/30 p-5 border-b border-pink-500/20">
-                        <div className="text-pink-300 text-xs font-medium mb-1">PROFESSIONAL</div>
+                      <div className="bg-gradient-to-r from-pink-800/30 to-pink-900/30 p-4 border-b border-pink-500/20">
+                        <div className="text-pink-300 text-[10px] font-medium mb-0.5">PROFESSIONAL</div>
                         <div className="flex items-baseline">
-                          <span className="text-3xl font-bold text-white">$20</span>
-                          <span className="text-gray-300 text-xs ml-1">/month</span>
+                          <span className="text-2xl font-bold text-white">$20</span>
+                          <span className="text-gray-300 text-[10px] ml-1">/month</span>
                         </div>
-                        <div className="text-gray-300 text-xs">Perfect for serious builders</div>
+                        <div className="text-gray-300 text-[9px]">For professionals who need more control</div>
                       </div>
                       
                       {/* Card features */}
-                      <div className="p-5">
-                        <ul className="space-y-3">
+                      <div className="p-4">
+                        <ul className="space-y-2">
                           {[
-                            'Advanced market insights',
+                            '100 GB secure cloud storage',
                             'AI-assisted strategy building',
                             'Email + chat support',
                             'Export & integration options'
                           ].map((feature, i) => (
                             <li key={i} className="flex items-start">
-                              <svg className="w-4 h-4 text-pink-400 mt-0.5 mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <svg className="w-3 h-3 text-pink-400 mt-0.5 mr-1.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                               </svg>
-                              <span className="text-gray-200 text-xs">{feature}</span>
+                              <span className="text-gray-200 text-[9px]">{feature}</span>
                             </li>
                           ))}
                         </ul>
                         
                         {/* CTA Button */}
-                        <div className="mt-6">
-                          <div className="w-full rounded-md py-2.5 bg-gradient-to-r from-pink-500 to-red-500 text-white text-sm font-medium text-center hover:from-pink-600 hover:to-red-600 transition-colors duration-300 cursor-pointer">
-                            Try for Free
+                        <div className="mt-4">
+                          <div className="w-full rounded-md py-1.5 bg-gradient-to-r from-pink-500 to-red-500 text-white text-[10px] font-medium text-center hover:from-pink-600 hover:to-red-600 transition-colors duration-300 cursor-pointer">
+                            Try Now
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  
-                  {/* Enterprise Plan Card */}
-                  <div className="relative group">
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-500/30 to-blue-500/30 rounded-2xl blur-md opacity-50 group-hover:opacity-70 transition-opacity duration-300"></div>
-                    <div className="relative w-[200px] h-[320px] backdrop-blur-xl bg-black/60 hover:bg-black/70 rounded-2xl border border-pink-500/20 overflow-hidden shadow-lg shadow-pink-500/20 transition-all duration-300">
+                    {/* Enterprise Plan Card */}
+                  <div className="relative group">                    <div className="absolute inset-0 bg-gradient-to-r from-purple-500/30 to-blue-500/30 rounded-2xl blur-md opacity-50 group-hover:opacity-70 transition-opacity duration-300"></div>
+                    <div className="relative w-[160px] h-[260px] backdrop-blur-xl bg-black/60 hover:bg-black/70 rounded-2xl border border-pink-500/20 overflow-hidden shadow-lg shadow-pink-500/20 transition-all duration-300">
                       {/* Card header */}
-                      <div className="bg-gradient-to-r from-purple-900/30 to-black/30 p-4 border-b border-pink-500/10">
-                        <div className="text-gray-400 text-xs font-medium mb-1">ENTERPRISE</div>
+                      <div className="bg-gradient-to-r from-purple-900/30 to-black/30 p-3 border-b border-pink-500/10">
+                        <div className="text-gray-400 text-[10px] font-medium mb-0.5">ENTERPRISE</div>
                         <div className="flex items-baseline">
-                          <span className="text-2xl font-bold text-white">$50</span>
-                          <span className="text-gray-400 text-xs ml-1">/month</span>
+                          <span className="text-xl font-bold text-white">$50</span>
+                          <span className="text-gray-400 text-[10px] ml-1">/month</span>
                         </div>
-                        <div className="text-gray-400 text-xs">For large teams and organizations</div>
+                        <div className="text-gray-400 text-[9px]">For large teams and organizations</div>
                       </div>
                       
                       {/* Card features */}
-                      <div className="p-4">
-                        <ul className="space-y-3">
+                      <div className="p-3">
+                        <ul className="space-y-2">
                           {[
-                            'Customizable reports & insights',
+                            'Dedicated SLA & onboarding support',
                             'Priority 24/7 support',
                             'API access & custom integrations'
                           ].map((feature, i) => (
                             <li key={i} className="flex items-start">
-                              <svg className="w-4 h-4 text-pink-400 mt-0.5 mr-2 flex-shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <svg className="w-3 h-3 text-pink-400 mt-0.5 mr-1.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                               </svg>
-                              <span className="text-gray-300 text-xs">{feature}</span>
+                              <span className="text-gray-300 text-[9px]">{feature}</span>
                             </li>
                           ))}
                         </ul>
                         
                         {/* CTA Button */}
-                        <div className="mt-5">
-                          <div className="w-full rounded-md py-2 border border-pink-500/30 text-pink-400 text-sm font-medium text-center hover:bg-pink-500/10 transition-colors duration-300 cursor-pointer">
+                        <div className="mt-4">
+                          <div className="w-full rounded-md py-1.5 border border-pink-500/30 text-pink-400 text-[10px] font-medium text-center hover:bg-pink-500/10 transition-colors duration-300 cursor-pointer">
                             Contact Us
                           </div>
                         </div>
@@ -969,6 +967,8 @@ export default function FeatureSection() {
     }
   ];
 
+  const isMobile = useIsMobile();
+
   return (
     <div className="relative bg-black overflow-hidden">
       {/* Background Effects - matching hero section */}
@@ -982,39 +982,76 @@ export default function FeatureSection() {
         {/* Subtle ambient glow orbs */}
         <div className="absolute top-2/3 left-1/4 w-96 h-96 bg-pink-600/5 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
         <div className="absolute top-1/4 right-1/6 w-80 h-80 bg-blue-600/5 rounded-full mix-blend-multiply filter blur-3xl animate-pulse animation-delay-2s"></div>
-      </div>
-
-      {/* Main content */}      <div className="relative z-10 py-24">
-        <div className="container mx-auto px-4 md:px-12 lg:px-16 xl:px-6 max-w-7xl">
+      </div>      {/* Main content */}      <div className="relative z-10 py-24">
+        <div className="container mx-auto px-6 md:px-14 lg:px-20 xl:px-24 max-w-7xl">
           {/* Section heading */}
           <div className="text-center mb-20">
             <div className="inline-block px-3 py-1 rounded-full bg-gradient-to-r from-pink-500/10 to-red-500/10 text-pink-500 text-sm font-medium mb-4 border border-pink-500/20">
               Features
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-              Everything You Need to Build Your MVP
+            </div>            <h2 className="text-3xl md:text-4xl font-bold pb-4 mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+              Features That Bridge Thinking and Building
             </h2>
             <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-              From market research to launch, our AI-powered platform streamlines the entire MVP development process.
             </p>
           </div>          {/* Feature rows */}
-          <div className="space-y-56">
+          <div className="space-y-52">
             {features.map((feature, idx) => {
               const Icon = feature.icon;
+              // Mobile: show text/button, then image, then next feature
+              if (isMobile) {
+                return (
+                  <div key={idx} className="flex flex-col items-center gap-8 justify-center mb-15">
+                    {/* Text content */}
+                    <div className="flex-1 w-full space-y-5">                      <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 to-red-500 p-2.5 shadow-lg shadow-pink-500/25">
+                        <Icon className="w-5 h-5 text-white" />
+                      </div><h3 className="text-xl font-bold text-white">{feature.title}</h3>
+                      <p className="text-gray-400 text-sm">{feature.description}</p>
+                      <ul className="space-y-3">
+                        {feature.subFeatures.map((subFeature, subIdx) => (
+                          <li key={subIdx} className="flex items-start gap-2">
+                            <div className="mt-1 w-4 h-4 rounded-full flex items-center justify-center bg-gradient-to-r from-pink-500 to-red-500">
+                              <div className="w-1.5 h-1.5 rounded-full bg-white"></div>
+                            </div>
+                            <span className="text-gray-300">{subFeature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <div>
+                        <button className="group relative px-6 py-2.5 bg-black border border-pink-500/50 rounded-full text-sm font-medium text-white hover:bg-gradient-to-r from-pink-500 to-red-500 transition-all duration-300 flex items-center gap-2">
+                          Learn more
+                          <svg className="w-4 h-4 transition-transform duration-300 transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                    {/* Mobile image below text */}
+                    <div className="w-full flex justify-center mt-6">
+                      <Image
+                        src={`/feature${idx + 1}.png`}
+                        alt={`Feature ${idx + 1}`}
+                        width={320}
+                        height={200}
+                        className="rounded-xl shadow-lg object-cover max-w-full h-auto"
+                        priority={idx === 0}
+                      />
+                    </div>
+                  </div>
+                );
+              }
+              // Desktop: keep existing layout
               return (
                 <div                  key={idx} 
                   className={`flex flex-col ${feature.illustrationSide === 'left' ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center ${idx === 0 ? 'gap-8' : 'gap-16'} justify-center`}
                 >
-                  {/* Text content */}
-                  <div className="flex-1 space-y-6">                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-pink-500 to-red-500 p-3 shadow-lg shadow-pink-500/25">
-                      <Icon className="w-6 h-6 text-white" />
+                  {/* Text content */}                  <div className="flex-1 space-y-5">                    <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 to-red-500 p-2.5 shadow-lg shadow-pink-500/25">
+                      <Icon className="w-5 h-5 text-white" />
                     </div>
-                    
-                    <h3 className="text-3xl font-bold text-white">
+                      <h3 className="text-2xl font-bold text-white">
                       {feature.title}
                     </h3>
                     
-                    <p className="text-gray-400 text-lg">
+                    <p className="text-gray-400 text-base">
                       {feature.description}
                     </p>
                     

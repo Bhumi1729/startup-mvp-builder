@@ -103,24 +103,24 @@ export default function MainDashboard({ userId }: { userId: string }) {
     <div className="container mx-auto px-6 py-12 max-w-7xl">
       <header className="mb-12">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-pink-500 to-red-600 inline-block text-transparent bg-clip-text mb-2">
-          Startup MVP Builder
+          Welcome Back, Builder!
         </h1>
-        <p className="text-gray-300 text-xl">Your startup projects dashboard</p>
+        <p className="text-gray-300 text-xl">Here are the MVPs you've been working on lately</p>
       </header>
 
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
         {/* Search */}
         <div className="relative w-full md:w-auto">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <Search className="h-5 w-5 text-pink-500" />
-          </div>
           <input
             type="text"
             placeholder="Search projects..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 pr-4 py-2 w-full md:w-80 bg-gray-900/60 border border-pink-500/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500/50 text-white backdrop-blur-sm"
+            className="pl-12 pr-4 py-3 w-full md:w-96 bg-gradient-to-r from-gray-900/80 to-black/80 border border-pink-500/40 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-500/60 text-white placeholder-pink-200 shadow-lg shadow-pink-500/10 hover:border-pink-400/60 transition-all duration-200 backdrop-blur-md"
           />
+          <span className="absolute inset-y-0 left-0 pl-3 flex items-center z-20 pointer-events-none">
+            <Search className="h-6 w-6 text-pink-400 drop-shadow-pink-500/60" style={{ filter: 'drop-shadow(0 0 6px #ec4899cc)' }} />
+          </span>
         </div>
 
         {/* New MVP Button */}
@@ -168,7 +168,7 @@ export default function MainDashboard({ userId }: { userId: string }) {
                 <div className="bg-gray-900 p-3 rounded mt-1 mb-2 font-mono text-sm">
                   <p>.\start-backend.ps1</p>
                 </div>
-                <li>Verify that the API URL in the frontend .env.local file is set correctly to point to http://localhost:8000</li>
+                <li>Verify that the API URL in the frontend config is set correctly to point to https://startup-mvp-builder.onrender.com</li>
                 <li>Make sure all required environment variables are set correctly in both frontend and backend</li>
                 <li>Try refreshing the page after starting the backend server</li>
               </ol>

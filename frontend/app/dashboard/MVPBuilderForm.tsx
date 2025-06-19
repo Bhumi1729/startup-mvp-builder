@@ -62,36 +62,47 @@ export default function MVPBuilderForm() {
   };
   
   return (
-    <div className="flex flex-col items-center justify-center min-h-[80vh] w-full">
-      <h1 className="text-5xl md:text-6xl font-extrabold text-center whitespace-nowrap bg-gradient-to-r from-pink-500 to-red-600 text-transparent bg-clip-text mb-10 leading-[1.25] pb-2">
+    <div className="flex flex-col items-center justify-center min-h-[80vh] w-full px-4 sm:px-6">
+      <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-extrabold text-center whitespace-normal bg-gradient-to-r from-pink-500 to-red-600 text-transparent bg-clip-text mb-6 sm:mb-10 leading-tight sm:leading-[1.25] pb-2">
         Build Stunning MVPs Effortlessly
       </h1>
-      <p className="text-lg md:text-xl text-gray-300 text-center mb-10 max-w-2xl">
+      <p className="text-base sm:text-lg md:text-xl text-gray-300 text-center mb-8 sm:mb-12 max-w-xl sm:max-w-3xl">
         Startup MVP Builder can create amazing MVP blueprints with just a few lines of prompt.
       </p>
-      <form onSubmit={handleSubmit} className="w-full max-w-2xl flex flex-col items-center gap-6">
-        <div className="w-full flex items-center bg-gray-900/80 rounded-full px-6 py-3 shadow-lg border border-pink-500/20 focus-within:ring-2 focus-within:ring-pink-500/40 transition-all">
-          <Sparkles className="w-6 h-6 text-pink-400 mr-3" />
+      <div 
+        className="absolute w-32 h-32 sm:w-40 sm:h-40 bg-pink-500/10 rounded-full filter blur-3xl opacity-20 animate-pulse"
+        style={{ 
+          top: '30%', 
+          right: '10%',
+          animation: 'pulse 8s ease-in-out infinite alternate'
+        }}
+      ></div>
+      
+      <form onSubmit={handleSubmit} className="w-full max-w-2xl sm:max-w-4xl flex flex-col items-center gap-6 sm:gap-8 relative z-10">
+        <div className="w-full flex items-center rounded-full px-4 sm:px-8 py-4 sm:py-5 input-glassmorphic input-glow transition-all relative z-10">
+          <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-pink-400 mr-3 sm:mr-4 filter drop-shadow-lg" />
           <input
             id="startup-idea"
             type="text"
             value={startupIdea}
             onChange={(e) => setStartupIdea(e.target.value)}
-            className="flex-1 bg-transparent outline-none border-none text-white placeholder-gray-400 text-lg"
-            placeholder="How can we help your startup today?"
+            className="flex-1 bg-transparent outline-none border-none text-white placeholder-gray-400 text-base sm:text-lg"
+            placeholder="Got a game-changing idea? Start typing it here..."
             disabled={loading}
             autoFocus
           />
         </div>
+        
         {error && (
-          <div className="bg-red-900/30 border border-red-500/50 text-red-200 p-4 rounded-lg backdrop-blur-sm w-full text-center">
+          <div className="bg-red-900/30 border border-red-500/50 text-red-200 p-3 sm:p-4 rounded-lg backdrop-blur-sm w-full text-center mt-2 mb-2 text-sm sm:text-base">
             {error}
           </div>
         )}
+        
         <button
           type="submit"
           disabled={loading}
-          className={`w-full max-w-xs inline-flex items-center justify-center px-6 py-3 rounded-full text-white font-semibold text-lg transition-all duration-300 shadow-lg relative overflow-hidden ${
+          className={`w-full max-w-xs inline-flex items-center justify-center px-4 sm:px-6 py-3 rounded-full text-white font-semibold text-base sm:text-lg transition-all duration-300 shadow-lg relative overflow-hidden mt-2 sm:mt-4 ${
             loading 
               ? 'bg-gray-700/50 cursor-not-allowed border border-gray-600/50' 
               : 'bg-gradient-to-r from-pink-600 to-red-600 hover:shadow-xl hover:shadow-pink-600/30 border border-transparent'
@@ -110,6 +121,7 @@ export default function MVPBuilderForm() {
           )}
         </button>
       </form>
+      
       {loading && (
         <div className="space-y-6 mt-10">
           <h2 className="text-xl font-semibold text-gray-200 flex items-center justify-center">

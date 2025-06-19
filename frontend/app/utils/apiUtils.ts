@@ -33,7 +33,7 @@ export function getApiErrorMessage(error: unknown): string {
   let message = 'An unknown error occurred';
   
   if (error instanceof TypeError && error.message.includes('fetch')) {
-    message = 'Failed to connect to the backend API. Please make sure the backend server is running on http://localhost:8000.';
+    message = 'Failed to connect to the backend API. Please make sure the backend server is running on https://startup-mvp-builder.onrender.com.';
   } else if (error instanceof DOMException && error.name === 'AbortError') {
     message = 'API request timed out. Please check if the backend server is running.';
   } else if (error instanceof Error) {

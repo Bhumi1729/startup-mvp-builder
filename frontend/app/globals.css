@@ -24,3 +24,163 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Glassmorphic input with neon pinkish-red glowy boundary */
+.input-glassmorphic {
+  background: rgba(10, 10, 10, 0.3);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 41, 112, 0.7);
+  box-shadow: 
+    0 0 10px rgba(255, 41, 112, 0.7),
+    0 0 20px rgba(236, 72, 153, 0.4),
+    inset 0 0 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  animation: neonPulse 2s infinite alternate;
+}
+
+.input-glassmorphic::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.05),
+    transparent
+  );
+  transition: all 0.6s ease;
+}
+
+.input-glassmorphic:hover::after {
+  left: 100%;
+}
+
+.input-glassmorphic:focus-within {
+  border: 1.5px solid rgba(255, 41, 112, 0.9);
+  box-shadow: 
+    0 0 15px rgba(255, 41, 112, 0.8),
+    0 0 30px rgba(236, 72, 153, 0.5),
+    inset 0 0 10px rgba(236, 72, 153, 0.1);
+}
+
+@keyframes neonPulse {
+  from {
+    box-shadow: 
+      0 0 10px rgba(255, 41, 112, 0.7),
+      0 0 20px rgba(236, 72, 153, 0.4),
+      inset 0 0 8px rgba(0, 0, 0, 0.2);
+  }
+  to {
+    box-shadow: 
+      0 0 15px rgba(255, 41, 112, 0.8),
+      0 0 25px rgba(236, 72, 153, 0.5),
+      inset 0 0 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.input-glow {
+  position: relative;
+}
+
+.input-glow::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  background: radial-gradient(circle at top right, rgba(255, 41, 112, 0.4), transparent 70%);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0.5;
+  transition: opacity 0.4s ease;
+  animation: neonGlowPulse 3s infinite alternate;
+}
+
+.input-glow:focus-within::before {
+  opacity: 0.8;
+}
+
+@keyframes neonGlowPulse {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 0.65;
+  }
+}
+
+/* Neon text effect for input field */
+.neon-text {
+  text-shadow: 0 0 4px rgba(255, 41, 112, 0.4);
+}
+
+.neon-text::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  text-shadow: 0 0 4px rgba(255, 41, 112, 0.3);
+}
+
+/* Pinkish-reddish blurred background glows for sign-in page */
+.signin-glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+.signin-glow-1 {
+  width: 700px;
+  height: 500px;
+  left: 10%;
+  top: 10%;
+  background: radial-gradient(circle, rgba(255,41,112,0.35) 0%, rgba(236,72,153,0.18) 60%, transparent 100%);
+  filter: blur(100px);
+  opacity: 0.7;
+}
+.signin-glow-2 {
+  width: 600px;
+  height: 400px;
+  right: 10%;
+  bottom: 15%;
+  background: radial-gradient(circle, rgba(236,72,153,0.25) 0%, rgba(255,41,112,0.12) 60%, transparent 100%);
+  filter: blur(80px);
+  opacity: 0.5;
+}
+.signin-glow-3 {
+  width: 400px;
+  height: 300px;
+  left: 50%;
+  top: 65%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(236,72,153,0.18) 0%, transparent 100%);
+  filter: blur(60px);
+  opacity: 0.4;
+}
+
+.card-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 440px;
+  height: 440px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(255,41,112,0.25) 0%, rgba(236,72,153,0.12) 60%, transparent 100%);
+  filter: blur(48px);
+  opacity: 0.85;
+  z-index: 0;
+  pointer-events: none;
+}

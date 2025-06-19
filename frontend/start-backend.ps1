@@ -1,6 +1,6 @@
 # Start the backend FastAPI server
 Write-Host "Starting Startup MVP Builder backend API server..."
-Write-Host "This will start the backend API server on http://localhost:8000"
+Write-Host "This will start the backend API server on https://startup-mvp-builder.onrender.com"
 Write-Host "Press Ctrl+C to stop the server"
 Write-Host ""
 

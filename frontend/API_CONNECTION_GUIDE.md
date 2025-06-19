@@ -1,8 +1,22 @@
-# API Connection Troubleshooting
+# API Connection Guide
 
-## Common Error: "Failed to fetch" / API Connection Issues
+## Production Backend
 
-If you're seeing "Failed to fetch" errors in your dashboard, it likely means the backend API server is not running or not accessible. Follow these steps to resolve the issue:
+The production backend is deployed at:
+```
+https://startup-mvp-builder.onrender.com
+```
+
+You can verify the API is working by accessing the Swagger UI at:
+```
+https://startup-mvp-builder.onrender.com/docs
+```
+
+## Local Development
+
+### Common Error: "Failed to fetch" / API Connection Issues
+
+If you're seeing "Failed to fetch" errors in your dashboard during local development, it likely means the backend API server is not running or not accessible. Follow these steps to resolve the issue:
 
 ### Step 1: Start the Backend Server
 
@@ -22,15 +36,15 @@ cd ..\backend_fastapi
 .\start_server.ps1
 ```
 
-**Expected output:** You should see output indicating the backend server has started on http://localhost:8000.
+**Expected output:** You should see output indicating the backend server has started on https://startup-mvp-builder.onrender.com.
 
 ### Step 2: Verify Environment Configuration
 
-Make sure your environment variables are set correctly:
+For local development, make sure your environment variables are set correctly:
 
-1. Check that the `.env.local` file in the frontend directory contains:
+1. Create a `.env.local` file in the frontend directory that contains:
    ```
-   NEXT_PUBLIC_API_URL=http://localhost:8000
+   NEXT_PUBLIC_API_URL=https://startup-mvp-builder.onrender.com
    ```
 
 2. Verify that the backend server's `.env` file has all required API keys and Supabase credentials.
@@ -43,9 +57,14 @@ After starting the backend server, refresh the dashboard page in your browser.
 
 - Check if the server is listening on the expected port (8000)
 - Check if there are any errors in the terminal where the backend server is running
-- Verify that you can access the backend API directly by navigating to `http://localhost:8000/docs` in your browser
+- Verify that you can access the backend API directly by navigating to `https://startup-mvp-builder.onrender.com/docs` in your browser
 - Make sure your network settings aren't blocking local connections
 
-## Note for Production Deployments
+## Production Configuration
 
-For production environments, make sure to update the `NEXT_PUBLIC_API_URL` in your environment configuration to point to your production backend URL.
+The production environment is configured to use the deployed backend URL:
+```
+NEXT_PUBLIC_API_URL=https://startup-mvp-builder.onrender.com
+```
+
+This is set directly in `next.config.js` so no additional environment configuration is needed for production deployments.

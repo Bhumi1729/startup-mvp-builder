@@ -98,7 +98,7 @@ export default function DetailComponent({ userId, sessionId }: { userId: string;
                 <div className="bg-gray-900 p-3 rounded mt-1 mb-2 font-mono text-sm">
                   <p>.\start-backend.ps1</p>
                 </div>
-                <li>Verify that the API URL in the frontend .env.local file is set correctly to point to http://localhost:8000</li>
+                <li>Verify that the API URL in the frontend config is set correctly to point to https://startup-mvp-builder.onrender.com</li>
                 <li>Try refreshing the page after starting the backend server</li>
               </ol>
             </div>
@@ -119,7 +119,7 @@ export default function DetailComponent({ userId, sessionId }: { userId: string;
         Back to Dashboard
       </Link>
       <div className="relative">
-        <h1 className="text-3xl md:text-5xl font-extrabold bg-gradient-to-r from-pink-500 to-red-600 text-transparent bg-clip-text mb-8">
+        <h1 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-pink-300 to-red-500 text-transparent bg-clip-text mb-8">
           {startupIdea}
         </h1>
         <p className="text-gray-300 mb-6">Created on {formatDate(output.created_at)}</p>
@@ -159,23 +159,26 @@ export default function DetailComponent({ userId, sessionId }: { userId: string;
             </button>
           </nav>
         </div>
-      </div>      {/* Tab Content */}
-      <div className="pt-4">
+      </div>      {/* Tab Content */}      <div className="pt-4">
         <div className="space-y-8 w-full">
           {activeTab === 'market' && (
-            <div className="relative bg-black/70 border border-pink-500/40 rounded-2xl shadow-xl shadow-pink-500/20 p-6 backdrop-blur-lg before:absolute before:inset-0 before:-z-10 before:bg-gradient-to-br before:from-pink-500/10 before:to-red-600/10 before:rounded-2xl before:backdrop-blur-xl before:pointer-events-none">
-              <div className="absolute -z-10 top-0 left-1/4 w-1/2 h-1/2 rounded-full bg-pink-600/20 blur-3xl"></div>
-              <div className="absolute -z-10 bottom-0 right-1/4 w-1/2 h-1/2 rounded-full bg-red-500/20 blur-3xl"></div>
+            <div className="relative bg-black/70 border border-pink-500/25 rounded-2xl shadow-lg shadow-pink-500/10 p-6 backdrop-blur-lg before:absolute before:inset-0 before:-z-10 before:bg-gradient-to-br before:from-pink-500/10 before:to-red-600/5 before:rounded-2xl before:backdrop-blur-xl before:pointer-events-none">
+              <div className="absolute -z-10 top-0 left-1/4 w-1/2 h-1/2 rounded-full bg-pink-600/10 blur-3xl"></div>
+              <div className="absolute -z-10 bottom-0 right-1/4 w-1/2 h-1/2 rounded-full bg-red-500/10 blur-3xl"></div>
               <MarketAnalysisDisplay analysisData={market_analyst_response} />
             </div>
           )}
           {activeTab === 'product' && (
-            <div className="bg-black/80 border border-pink-500/30 rounded-2xl shadow-xl shadow-pink-500/10 p-6 backdrop-blur-md">
+            <div className="relative bg-black/70 border border-pink-500/25 rounded-2xl shadow-lg shadow-pink-500/10 p-6 backdrop-blur-lg before:absolute before:inset-0 before:-z-10 before:bg-gradient-to-br before:from-pink-500/10 before:to-red-600/5 before:rounded-2xl before:backdrop-blur-xl before:pointer-events-none">
+              <div className="absolute -z-10 top-0 left-1/4 w-1/2 h-1/2 rounded-full bg-pink-600/10 blur-3xl"></div>
+              <div className="absolute -z-10 bottom-0 right-1/4 w-1/2 h-1/2 rounded-full bg-red-500/10 blur-3xl"></div>
               <ProductManagerDisplay analysisData={product_manager_response} />
             </div>
           )}
           {activeTab === 'tech' && (
-            <div className="bg-black/80 border border-pink-500/30 rounded-2xl shadow-xl shadow-pink-500/10 p-6 backdrop-blur-md">
+            <div className="relative bg-black/70 border border-pink-500/25 rounded-2xl shadow-lg shadow-pink-500/10 p-6 backdrop-blur-lg before:absolute before:inset-0 before:-z-10 before:bg-gradient-to-br before:from-pink-500/10 before:to-red-600/5 before:rounded-2xl before:backdrop-blur-xl before:pointer-events-none">
+              <div className="absolute -z-10 top-0 left-1/4 w-1/2 h-1/2 rounded-full bg-pink-600/10 blur-3xl"></div>
+              <div className="absolute -z-10 bottom-0 right-1/4 w-1/2 h-1/2 rounded-full bg-red-500/10 blur-3xl"></div>
               <TechArchitectDisplay analysisData={tech_architect_response} />
             </div>
           )}
@@ -188,27 +191,67 @@ function ProductManagerTab({ data }: { data: ProductManagerResponse }) {
   if (!data) {
     return <div>No product roadmap data available.</div>;
   }
-
   return (
     <div className="space-y-8">
       <section>
-        <h2 className="text-2xl font-bold mb-4">Product Roadmap</h2>
+        <h2 className="text-2xl font-bold text-pink-300 mb-6 flex items-center">
+          <span className="bg-pink-500/15 rounded-full p-2 mr-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-pink-200">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </span>
+          Product Roadmap
+        </h2>
         
-        <div className="bg-white shadow overflow-hidden rounded-md">
-          <div className="px-6 py-5 border-b">
-            <h3 className="text-lg font-medium mb-3">User Personas</h3>
+        <div className="bg-black/70 border border-pink-500/25 rounded-2xl shadow-lg shadow-pink-500/10 backdrop-blur-lg relative overflow-hidden">
+          <div className="absolute -z-10 top-0 right-0 w-1/3 h-1/3 rounded-full bg-pink-600/10 blur-xl"></div>
+          <div className="absolute -z-10 bottom-1/4 left-1/4 w-1/3 h-1/3 rounded-full bg-red-600/5 blur-xl"></div>
+          
+          <div className="px-6 py-5 border-b border-pink-500/20 relative z-10">
+            <h3 className="text-lg font-bold text-pink-200 mb-4 flex items-center">
+              <div className="w-6 h-6 rounded-full bg-gradient-to-br from-pink-500/20 to-red-500/20 flex items-center justify-center mr-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-pink-100">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </div>
+              User Personas
+            </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {data.user_personas && data.user_personas.map((persona: any, index: number) => (
-                <div key={index} className="border rounded-md p-4">
-                  <h4 className="font-medium">{persona.name}</h4>
-                  <p className="mt-1 text-sm text-gray-600">{persona.description}</p>
+                <div key={index} className="border border-pink-500/15 rounded-xl p-5 bg-black/60 backdrop-blur-sm relative overflow-hidden">
+                  <div className="absolute -z-10 top-0 right-0 w-1/4 h-1/3 rounded-full bg-pink-600/5 blur-xl"></div>
+                  
+                  <div className="flex items-center mb-3">
+                    <div className="w-8 h-8 bg-gradient-to-br from-pink-500/15 to-red-500/15 rounded-full flex items-center justify-center mr-3">
+                      <span className="text-pink-200 font-bold">{index + 1}</span>
+                    </div>
+                    <h4 className="font-bold text-pink-200">{persona.name}</h4>
+                  </div>
+                  
+                  <p className="mt-1 text-gray-100 ml-11 mb-3">{persona.description}</p>
                   
                   {persona.pain_points && persona.pain_points.length > 0 && (
-                    <div className="mt-2">
-                      <h5 className="text-sm font-medium text-gray-700">Pain Points:</h5>
-                      <ul className="mt-1 text-sm text-gray-600 list-disc pl-4">
+                    <div className="mt-2 bg-black/40 p-3 rounded-lg border border-pink-500/10">
+                      <div className="flex items-center mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-pink-200 mr-2">
+                          <path d="M2 12h5"></path>
+                          <path d="M9 12h5"></path>
+                          <path d="M16 12h6"></path>
+                        </svg>
+                        <h5 className="text-sm font-medium text-pink-200">Pain Points</h5>
+                      </div>
+                      <ul className="mt-1 text-gray-100 space-y-2 ml-6">
                         {persona.pain_points.map((point: string, i: number) => (
-                          <li key={i}>{point}</li>
+                          <li key={i} className="flex items-start">
+                            <span className="inline-block w-1.5 h-1.5 rounded-full bg-pink-400 mr-2 mt-2"></span>
+                            <span>{point}</span>
+                          </li>
                         ))}
                       </ul>
                     </div>
@@ -218,44 +261,88 @@ function ProductManagerTab({ data }: { data: ProductManagerResponse }) {
             </div>
           </div>
           
-          <div className="px-6 py-5 border-b">
-            <h3 className="text-lg font-medium mb-3">MVP Features</h3>
-            <ul className="list-disc pl-6 space-y-1">
+          <div className="px-6 py-5 border-b border-pink-500/20 relative z-10">
+            <h3 className="text-lg font-bold text-pink-200 mb-4 flex items-center">
+              <div className="w-6 h-6 rounded-full bg-gradient-to-br from-pink-500/20 to-red-500/20 flex items-center justify-center mr-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-pink-100">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </div>
+              MVP Features
+            </h3>
+            <ul className="space-y-2 ml-8">
               {data.mvp_features && data.mvp_features.map((feature: string, index: number) => (
-                <li key={index}>{feature}</li>
+                <li key={index} className="text-gray-100 flex items-start">
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-pink-400 mr-2 mt-2"></span>
+                  <span>{feature}</span>
+                </li>
               ))}
             </ul>
           </div>
           
-          <div className="px-6 py-5">
-            <h3 className="text-lg font-medium mb-3">Features Detail</h3>
-            <div className="space-y-4">
+          <div className="px-6 py-5 relative z-10">
+            <h3 className="text-lg font-bold text-pink-200 mb-4 flex items-center">
+              <div className="w-6 h-6 rounded-full bg-gradient-to-br from-pink-500/20 to-red-500/20 flex items-center justify-center mr-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-pink-100">
+                  <path d="M11 12H3"></path>
+                  <path d="M16 6H3"></path>
+                  <path d="M16 18H3"></path>
+                  <path d="M18 9v6"></path>
+                  <path d="M21 12h-3"></path>
+                </svg>
+              </div>
+              Features Detail
+            </h3>
+            <div className="space-y-6">
               {data.features && data.features.map((feature: any, index: number) => (
-                <div key={index} className="border rounded-md p-4">
-                  <div className="flex justify-between items-start">
-                    <h4 className="font-bold">{feature.name}</h4>
-                    <div className="flex space-x-2">
-                      <span className={`text-sm rounded-full px-3 py-1 ${
-                        feature.priority === 'High' 
-                          ? 'bg-red-100 text-red-800' 
-                          : feature.priority === 'Medium'
-                          ? 'bg-yellow-100 text-yellow-800'
-                          : 'bg-green-100 text-green-800'
-                      }`}>
-                        {feature.priority}
-                      </span>
-                    </div>
-                  </div>
-                  <p className="mt-1 text-gray-600">{feature.description}</p>
+                <div key={index} className="border border-pink-500/15 rounded-xl p-5 bg-black/60 backdrop-blur-sm relative overflow-hidden">
+                  <div className="absolute -z-10 top-0 right-0 w-1/4 h-1/3 rounded-full bg-pink-600/5 blur-xl"></div>
+                  <div className="absolute -z-10 bottom-0 left-0 w-1/3 h-1/3 rounded-full bg-red-500/5 blur-xl"></div>
                   
-                  <div className="grid grid-cols-2 gap-4 mt-3">
-                    <div>
-                      <span className="text-sm font-medium text-gray-700">Effort: </span>
-                      <span className="text-sm text-gray-600">{feature.effort}/10</span>
+                  <div className="flex justify-between items-center mb-3">
+                    <div className="flex items-center">
+                      <div className="w-8 h-8 bg-gradient-to-br from-pink-500/15 to-red-500/15 rounded-full flex items-center justify-center mr-3">
+                        <span className="text-pink-200 font-bold">{index + 1}</span>
+                      </div>
+                      <h3 className="text-xl font-bold bg-gradient-to-r from-pink-200 to-red-200 bg-clip-text text-transparent">
+                        {feature.name}
+                      </h3>
                     </div>
-                    <div>
-                      <span className="text-sm font-medium text-gray-700">Impact: </span>
-                      <span className="text-sm text-gray-600">{feature.impact}/10</span>
+                    <span className={`px-3 py-1 text-xs rounded-full ${
+                      feature.priority === 'High' 
+                        ? 'bg-red-900/50 text-red-200 border border-red-500/30' 
+                        : feature.priority === 'Medium'
+                        ? 'bg-yellow-900/50 text-yellow-200 border border-yellow-500/30'
+                        : 'bg-green-900/50 text-green-200 border border-green-500/30'
+                    }`}>
+                      {feature.priority}
+                    </span>
+                  </div>
+                  
+                  <div className="bg-black/40 p-4 rounded-lg mb-4 border border-pink-500/10">
+                    <p className="text-gray-100">{feature.description}</p>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4 mt-3 bg-black/40 p-3 rounded-lg border border-pink-500/10">
+                    <div className="flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-pink-200 mr-2">
+                        <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"></path>
+                        <path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"></path>
+                        <path d="M12 2v2"></path>
+                        <path d="M12 22v-2"></path>
+                      </svg>
+                      <span className="text-sm font-medium text-pink-200">Effort: </span>
+                      <span className="text-sm text-gray-100 ml-1">{feature.effort}/10</span>
+                    </div>
+                    <div className="flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-pink-200 mr-2">
+                        <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+                        <path d="M12 14v-4"></path>
+                        <path d="M12 18h.01"></path>
+                      </svg>
+                      <span className="text-sm font-medium text-pink-200">Impact: </span>
+                      <span className="text-sm text-gray-100 ml-1">{feature.impact}/10</span>
                     </div>
                   </div>
                 </div>

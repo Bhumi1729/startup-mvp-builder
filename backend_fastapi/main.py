@@ -272,6 +272,10 @@ async def get_session_output(request: SessionIdRequest):
             raise e
         raise HTTPException(status_code=500, detail=f"Error retrieving agent outputs: {str(e)}")
 
+@app.get("/ping")
+async def ping():
+    return {"message": "pong"}
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)

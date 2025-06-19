@@ -24,7 +24,7 @@ const MarketAnalysisDisplay: React.FC<MarketAnalysisDisplayProps> = ({ analysisD
               </svg>
               MARKET ANALYSIS REPORT
             </div><h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-pink-300 to-red-300 bg-clip-text text-transparent mb-2">
-              {analysisData.startup_idea}
+              Market Analysis Report
             </h1>
             <p className="text-gray-300 text-lg max-w-2xl">
               Comprehensive market analysis and competitive insights for your startup idea.
