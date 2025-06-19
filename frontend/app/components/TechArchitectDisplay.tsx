@@ -234,14 +234,24 @@ export default function TechArchitectDisplay({ analysisData }: TechArchitectDisp
                       </div>
                       <div className="mt-3 bg-black/50 p-3 rounded-lg border border-pink-500/10">
                         <ul className="text-sm text-gray-100 space-y-2">
-                          {schema.relationships.map((rel: any, i: number) => (
-                            <li key={i} className="flex items-start p-2 border-b border-pink-500/10 last:border-0">
-                              <div className="flex-shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-pink-500/15 to-red-500/15 flex items-center justify-center mr-3 mt-0.5 border border-pink-500/10">
-                                <span className="text-[10px] font-bold text-pink-200">{i + 1}</span>
-                              </div>
-                              <span>{rel}</span>
-                            </li>
-                          ))}
+                          {schema.relationships.map((rel: any, i: number) => {
+                            let relString = '';
+                            if (rel && typeof rel === 'object' && (rel.table || rel.type)) {
+                              relString = `${rel.type || ''}${rel.table ? ` (${rel.table})` : ''}${rel.description ? ` - ${rel.description}` : ''}`;
+                            } else if (typeof rel === 'object') {
+                              relString = JSON.stringify(rel);
+                            } else {
+                              relString = String(rel);
+                            }
+                            return (
+                              <li key={i} className="flex items-start p-2 border-b border-pink-500/10 last:border-0">
+                                <div className="flex-shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-pink-500/15 to-red-500/15 flex items-center justify-center mr-3 mt-0.5 border border-pink-500/10">
+                                  <span className="text-[10px] font-bold text-pink-200">{i + 1}</span>
+                                </div>
+                                <span>{relString}</span>
+                              </li>
+                            );
+                          })}
                         </ul>
                       </div>
                     </div>
@@ -768,7 +778,7 @@ export default function TechArchitectDisplay({ analysisData }: TechArchitectDisp
                   </svg>
                 </div>
                 <div>
-                  <span className="bg-gradient-to-r from-pink-200 to-red-200 bg-clip-text text-transparent">Development Tools</span>
+                                   <span className="bg-gradient-to-r from-pink-200 to-red-200 bg-clip-text text-transparent">Development Tools</span>
                   <div className="text-xs font-normal text-gray-400 mt-1">Essential software and utilities for the development process</div>
                 </div>
               </h3>

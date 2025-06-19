@@ -199,7 +199,8 @@ def normalize_deployment_strategy(data: Dict) -> Dict:
 
 def normalize_security_considerations(data: Dict) -> Dict:
     """
-    Normalizes security considerations data to ensure it has all required fields.
+    Normalizes security considerations data to ensure it has all required fields and correct types.
+    Handles cases where fields are dicts (as returned by AI) instead of strings/lists.
     
     Args:
         data (Dict): The raw security considerations data
@@ -214,40 +215,50 @@ def normalize_security_considerations(data: Dict) -> Dict:
         data = data["securityConsiderations"]
     elif "security" in data:
         data = data["security"]
-    
-    # Ensure all required fields are present
+
+    # --- Robust normalization for AI dict responses ---
+    # authentication_method: string or dict
+    auth_method = data.get("authentication_method", "JWT-based authentication")
+    if isinstance(auth_method, dict):
+        auth_method = auth_method.get("recommended", "JWT-based authentication")
+    # authorization_approach: string or dict
+    authz_approach = data.get("authorization_approach", "Role-based access control")
+    if isinstance(authz_approach, dict):
+        authz_approach = authz_approach.get("recommended", "Role-based access control")
+    # data_encryption: dict with at_rest/in_transit as string or dict
+    data_encryption = data.get("data_encryption", {})
+    if not data_encryption or not isinstance(data_encryption, dict):
+        data_encryption = {"in_transit": "TLS 1.3", "at_rest": "AES-256"}
+    else:
+        at_rest = data_encryption.get("at_rest", "AES-256")
+        if isinstance(at_rest, dict):
+            at_rest = at_rest.get("recommended", "AES-256")
+        in_transit = data_encryption.get("in_transit", "TLS 1.3")
+        if isinstance(in_transit, dict):
+            in_transit = in_transit.get("recommended", "TLS 1.3")
+        data_encryption = {"in_transit": in_transit, "at_rest": at_rest}
+    # security_best_practices, compliance_considerations, security_testing: list or string or dict
+    def normalize_list_field(val, default):
+        if isinstance(val, dict):
+            # e.g. {"recommendations": [..]}
+            val = val.get("recommendations", default)
+        if isinstance(val, str):
+            val = [item.strip() for item in val.split(",") if item.strip()]
+        if not val:
+            return default
+        return val
+    security_best_practices = normalize_list_field(data.get("security_best_practices"), ["Input validation", "CSRF protection", "Regular updates"])
+    compliance_considerations = normalize_list_field(data.get("compliance_considerations"), ["GDPR", "CCPA"])
+    security_testing = normalize_list_field(data.get("security_testing"), ["Penetration testing", "Vulnerability scanning"])
+
     normalized_data = {
-        "authentication_method": data.get("authentication_method", "JWT-based authentication"),
-        "authorization_approach": data.get("authorization_approach", "Role-based access control"),
-        "data_encryption": data.get("data_encryption", {}),
-        "security_best_practices": data.get("security_best_practices", []),
-        "compliance_considerations": data.get("compliance_considerations", []),
-        "security_testing": data.get("security_testing", [])
+        "authentication_method": auth_method,
+        "authorization_approach": authz_approach,
+        "data_encryption": data_encryption,
+        "security_best_practices": security_best_practices,
+        "compliance_considerations": compliance_considerations,
+        "security_testing": security_testing
     }
-    
-    # Ensure data_encryption is a dict
-    if not normalized_data["data_encryption"] or not isinstance(normalized_data["data_encryption"], dict):
-        normalized_data["data_encryption"] = {
-            "in_transit": "TLS 1.3",
-            "at_rest": "AES-256"
-        }
-    
-    # Convert string lists to actual lists if needed
-    for field in ["security_best_practices", "compliance_considerations", "security_testing"]:
-        if isinstance(normalized_data[field], str):
-            items = normalized_data[field]
-            normalized_data[field] = [item.strip() for item in items.split(",") if item.strip()]
-    
-    # Set default values if lists are empty
-    if not normalized_data["security_best_practices"]:
-        normalized_data["security_best_practices"] = ["Input validation", "CSRF protection", "Regular updates"]
-    
-    if not normalized_data["compliance_considerations"]:
-        normalized_data["compliance_considerations"] = ["GDPR", "CCPA"]
-    
-    if not normalized_data["security_testing"]:
-        normalized_data["security_testing"] = ["Penetration testing", "Vulnerability scanning"]
-    
     return normalized_data
 
 def normalize_third_party_services(data: Dict) -> Dict[str, List[Dict[str, str]]]:
